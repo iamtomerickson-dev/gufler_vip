@@ -26,6 +26,11 @@
   .intro strong { font-weight: 500; }
   .guest-grid { display: flex; flex-direction: column; gap: 1.2rem; }
   .guest-card { background: #fff; border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; animation: fadeUp .5s ease both; }
+  .guest-card:nth-child(1) { animation-delay: .05s; }
+  .guest-card:nth-child(2) { animation-delay: .10s; }
+  .guest-card:nth-child(3) { animation-delay: .15s; }
+  .guest-card:nth-child(4) { animation-delay: .20s; }
+  .guest-card:nth-child(5) { animation-delay: .25s; }
   .guest-header { display: flex; align-items: center; gap: 1.2rem; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--rule); cursor: pointer; user-select: none; }
   .guest-header:hover { background: var(--cream); }
   .rank-badge { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; color: var(--parchment); width: 36px; text-align: center; flex-shrink: 0; }
@@ -83,72 +88,73 @@
 <footer>Gufler Mansion Guest Intelligence · VIP Loyalty Report · 875 total records · 9 repeat guests</footer>
 
 <script>
-var GUESTS = [
-  {rank:1,name:null,nameNote:'ESU Coordinator (name not captured)',email:'ktabare1@emporia.edu',phone:'(620) 341-5330',visits:7,firstContact:'2018-12-10',lastContact:'2019-02-25',checkIn:'2018-12-06',room:null,type:'institutional',tags:['ESU','Institutional','Repeat Booker'],note:'This is the most active single contact in the entire database — 7 separate reservation threads for ESU candidate visits. The name was not captured in the email archive but the ESU main office number is on file. A direct relationship here could anchor recurring institutional revenue every recruitment season.',actionEmail:'mailto:ktabare1@emporia.edu?subject=Gufler Mansion — 2025 ESU Candidate Visits&body=Hello,%0A%0AWe wanted to reach out personally as one of our most valued recurring partners...'},
+const GUESTS = [
+  {rank:1,name:null,nameNote:'ESU Coordinator (name not captured)',email:'ktabare1@emporia.edu',phone:'(620) 341-5330',visits:7,firstContact:'2018-12-10',lastContact:'2019-02-25',checkIn:'2018-12-06',room:null,type:'institutional',tags:['ESU','Institutional','Repeat Booker'],note:'This is the most active single contact in the entire database — 7 separate reservation threads for ESU candidate visits. The original contact is no longer at ESU. Use the directory link below to find the current coordinator for candidate visits and recruitment.',actionEmail:'https://www.emporia.edu/about-emporia-state-university/leadership-faculty-staff/university-directory/',actionLabel:'🔍 Find current ESU contact'},
   {rank:2,name:'Laurie Pitman',email:'kwerly@emporia.edu',phone:'(620) 341-6469',visits:5,firstContact:'2019-10-04',lastContact:'2019-11-19',checkIn:'2019-10-22',checkOut:'2020-10-22',room:null,type:'institutional',tags:['ESU','Institutional','Dinner Booking'],note:'Five reservation threads in a short window, including at least one dinner reservation. Another ESU-linked contact worth a direct outreach before fall recruitment season.',actionEmail:'mailto:kwerly@emporia.edu?subject=Gufler Mansion — 2025 Reservations&body=Hello Laurie,%0A%0AWe hope this finds you well...'},
   {rank:3,name:'Marsha Telesmanic',email:'mmhappier@msn.com',phone:'(602) 321-1801',visits:3,firstContact:'2020-10-01',lastContact:'2022-01-17',checkIn:'2022-06-10',checkOut:'2022-06-15',room:'Italian Room',type:'personal',tags:['Personal Guest','Arizona','Multi-night'],note:'Marsha is the most loyal personal guest in the database — three contacts spanning nearly two years, with a confirmed multi-night stay in the Italian Room in June 2022. A warm personal note from Ben or Susan before summer 2025 could bring her back.',actionEmail:'mailto:mmhappier@msn.com?subject=A personal note from Gufler Mansion&body=Dear Marsha,%0A%0AWe have such fond memories of your stays with us...'},
   {rank:4,name:'Rob Gilligan',email:'gilligan_rob@yahoo.com',phone:null,visits:3,firstContact:'2020-06-23',lastContact:'2020-06-24',checkIn:null,room:null,type:'personal',tags:['Personal Guest','Group Inquiry','Pricing Questions'],note:'Three contacts in a very short window — Rob was actively shopping for a group stay for 6 guests / 3 couples. Worth a follow-up with group rate information for 2025.',actionEmail:'mailto:gilligan_rob@yahoo.com?subject=Gufler Mansion — Group Stays 2025&body=Hello Rob,%0A%0AWe noticed you had reached out to us about a group stay...'},
-  {rank:5,name:'Steve Cooper',email:'steverotimicooper@gmail.com',phone:'(202) 830-1571',visits:2,firstContact:'2017-08-30',lastContact:'2017-10-19',checkIn:'2017-08-29',room:null,type:'personal',tags:['Personal Guest','Washington DC','Early Guest'],note:'One of the earliest guests in the database — Steve\'s family stayed in August 2017 and he contacted us again in October. A Washington DC area guest who found the mansion during its earliest days.',actionEmail:'mailto:steverotimicooper@gmail.com?subject=Gufler Mansion — Welcome Back&body=Dear Steve,%0A%0AWe hope you and your family are doing well...'},
+  {rank:5,name:'Steve Cooper',email:'steverotimicooper@gmail.com',phone:'(202) 830-1571',visits:2,firstContact:'2017-08-30',lastContact:'2017-10-19',checkIn:'2017-08-29',room:null,type:'personal',tags:['Personal Guest','Washington DC','Early Guest'],note:'One of the earliest guests in the database — Steve\'s family stayed in August 2017 and contacted us again in October. A Washington DC area guest who found the mansion during its earliest days.',actionEmail:'mailto:steverotimicooper@gmail.com?subject=Gufler Mansion — Welcome Back&body=Dear Steve,%0A%0AWe hope you and your family are doing well...'},
   {rank:6,name:'Kaila Williams',email:'kailaraewilliams@gmail.com',phone:'(785) 706-3990',visits:2,firstContact:'2020-06-23',lastContact:'2020-06-24',checkIn:null,room:null,type:'personal',tags:['Personal Guest','Kansas','Group Inquiry'],note:'Kaila inquired about group pricing alongside Rob Gilligan — these may have been planning a joint stay. Local Kansas guest worth re-engaging.',actionEmail:'mailto:kailaraewilliams@gmail.com?subject=Gufler Mansion — 2025 Availability&body=Hello Kaila,%0A%0AWe wanted to reach out...'},
   {rank:7,name:'Kailyn Everitt',email:'kailyneveritt@hotmail.com',phone:'(936) 648-8413',visits:2,firstContact:'2020-06-23',lastContact:'2020-06-24',checkIn:'2021-03-01',checkOut:'2021-03-07',room:null,type:'personal',tags:['Personal Guest','Texas','Extended Stay'],note:'Kailyn booked a 6-night stay in March 2021 — one of the longer stays in the database. Texas guest who found us in 2020.',actionEmail:'mailto:kailyneveritt@hotmail.com?subject=Gufler Mansion — Welcome Back&body=Dear Kailyn,%0A%0AWe hope you have wonderful memories of your stay with us...'},
-  {rank:8,name:null,nameNote:'Guest (name not captured)',email:'mtgraham11@gmail.com',phone:'(917) 916-0708',visits:2,firstContact:'2020-10-30',lastContact:'2020-11-04',checkIn:'2021-06-07',room:null,type:'unbound',tags:['Unbound Gravel','Turned Away','New York','Re-engage'],note:'Tried to book for Unbound Gravel 2021 and was turned away — the mansion was fully booked. Reached out twice in one week. A proactive outreach ahead of Unbound 2025 could convert this lost guest into a confirmed booking.',actionEmail:'mailto:mtgraham11@gmail.com?subject=Gufler Mansion — Unbound Gravel 2025 Early Access&body=Hello,%0A%0AWe noticed you had reached out to us about Unbound Gravel weekend in 2021. We are taking reservations now for 2025 and wanted to give you first access...'},
+  {rank:8,name:null,nameNote:'Guest (name not captured)',email:'mtgraham11@gmail.com',phone:'(917) 916-0708',visits:2,firstContact:'2020-10-30',lastContact:'2020-11-04',checkIn:'2021-06-07',room:null,type:'unbound',tags:['Unbound Gravel','Turned Away','New York','Re-engage'],note:'Tried to book for Unbound Gravel 2021 and was turned away — fully booked, redirected to Mouse Lake House. Reached out twice in one week. A proactive outreach ahead of Unbound 2025 could convert this lost guest into a confirmed booking.',actionEmail:'mailto:mtgraham11@gmail.com?subject=Gufler Mansion — Unbound Gravel 2025 Early Access&body=Hello,%0A%0AWe noticed you had reached out to us about Unbound Gravel weekend in 2021. We are taking reservations now for 2025 and wanted to give you first access...'},
   {rank:9,name:null,nameNote:'Guest (name not captured)',email:'jenniferkroen@hotmail.com',phone:'(636) 515-5869',visits:2,firstContact:'2020-11-17',lastContact:'2020-11-17',checkIn:'2021-06-04',checkOut:'2021-06-06',room:null,type:'unbound',tags:['Dirty Kanza','Turned Away','Missouri','Re-engage'],note:'Also turned away for Dirty Kanza / Unbound 2021. Missouri guest (St. Louis area). A targeted early access outreach ahead of Unbound 2025 is a high-probability re-engagement.',actionEmail:'mailto:jenniferkroen@hotmail.com?subject=Gufler Mansion — Unbound Gravel 2025 Early Access&body=Hello,%0A%0AWe noticed you had reached out to us about Dirty Kanza weekend in 2021. We are taking reservations now for 2025 and wanted to give you first access...'},
 ];
 
-function makePips(count,max) {
-  var html='';
-  for(var i=0;i<max;i++) html+='<div class="pill'+(i<count?'':' faded')+'"></div>';
+function makeVisitPips(count, max=7) {
+  let html = '';
+  for (let i = 0; i < max; i++) html += `<div class="pill${i < count ? '' : ' faded'}"></div>`;
   return html;
 }
 
-function renderGuest(g,container) {
-  var card=document.createElement('div');
-  card.className='guest-card';
-  var displayName=g.name||g.nameNote;
-  var isAnon=!g.name;
-  var detailRows='';
-  detailRows+='<div class="detail-item"><div class="detail-label">Email</div><div class="detail-value"><a href="mailto:'+g.email+'">'+g.email+'</a></div></div>';
-  if(g.phone) detailRows+='<div class="detail-item"><div class="detail-label">Phone</div><div class="detail-value"><a href="tel:'+g.phone+'">'+g.phone+'</a></div></div>';
-  detailRows+='<div class="detail-item"><div class="detail-label">First Contact</div><div class="detail-value">'+(g.firstContact||'—')+'</div></div>';
-  detailRows+='<div class="detail-item"><div class="detail-label">Last Contact</div><div class="detail-value">'+(g.lastContact||'—')+'</div></div>';
-  if(g.checkIn) detailRows+='<div class="detail-item"><div class="detail-label">Check-in</div><div class="detail-value">'+g.checkIn+'</div></div>';
-  if(g.checkOut) detailRows+='<div class="detail-item"><div class="detail-label">Check-out</div><div class="detail-value">'+g.checkOut+'</div></div>';
-  if(g.room) detailRows+='<div class="detail-item"><div class="detail-label">Room</div><div class="detail-value">'+g.room+'</div></div>';
-  var tags=g.tags.map(function(t){
-    var cls=['Turned Away','Re-engage'].includes(t)?'alert':['ESU','Institutional'].includes(t)?'good':'';
-    return '<span class="tag '+cls+'">'+t+'</span>';
+function renderGuest(g, container) {
+  const card = document.createElement('div');
+  card.className = 'guest-card';
+  const displayName = g.name || g.nameNote;
+  const isAnon = !g.name;
+  let detailRows = '';
+  detailRows += `<div class="detail-item"><div class="detail-label">Email</div><div class="detail-value"><a href="mailto:${g.email}">${g.email}</a></div></div>`;
+  if (g.phone) detailRows += `<div class="detail-item"><div class="detail-label">Phone</div><div class="detail-value"><a href="tel:${g.phone}">${g.phone}</a></div></div>`;
+  detailRows += `<div class="detail-item"><div class="detail-label">First Contact</div><div class="detail-value">${g.firstContact || '—'}</div></div>`;
+  detailRows += `<div class="detail-item"><div class="detail-label">Last Contact</div><div class="detail-value">${g.lastContact || '—'}</div></div>`;
+  if (g.checkIn) detailRows += `<div class="detail-item"><div class="detail-label">Check-in</div><div class="detail-value">${g.checkIn}</div></div>`;
+  if (g.checkOut) detailRows += `<div class="detail-item"><div class="detail-label">Check-out</div><div class="detail-value">${g.checkOut}</div></div>`;
+  if (g.room) detailRows += `<div class="detail-item"><div class="detail-label">Room</div><div class="detail-value">${g.room}</div></div>`;
+  const tags = g.tags.map(t => {
+    const cls = ['Turned Away','Re-engage'].includes(t) ? 'alert' : ['ESU','Institutional'].includes(t) ? 'good' : '';
+    return `<span class="tag ${cls}">${t}</span>`;
   }).join('');
-  card.innerHTML=
-    '<div class="guest-header">'+
-    '<div class="rank-badge'+(g.rank<=2?' top':'')+'">'+g.rank+'</div>'+
-    '<div class="guest-identity">'+
-    '<div class="guest-name'+(isAnon?' anonymous':'')+'">'+displayName+'</div>'+
-    '<div class="guest-email">'+g.email+'</div>'+
-    '</div>'+
-    '<div style="display:flex;flex-direction:column;align-items:center;gap:.15rem">'+
-    '<div style="display:flex;gap:3px">'+makePips(g.visits,7)+'</div>'+
-    '<div style="display:flex;align-items:baseline;gap:.3rem">'+
-    '<div class="visit-count">'+g.visits+'</div>'+
-    '<div class="visit-label">contacts</div>'+
-    '</div></div>'+
-    '<div class="chevron">▾</div>'+
-    '</div>'+
-    '<div class="guest-detail">'+
-    '<div class="detail-grid">'+detailRows+'</div>'+
-    '<div>'+tags+'</div>'+
-    '<div class="note">'+g.note+'</div>'+
-    '<div><a class="action-btn primary" href="'+g.actionEmail+'">✉ Draft outreach email</a></div>'+
-    '</div>';
-  card.querySelector('.guest-header').addEventListener('click',function(){card.classList.toggle('open');});
+  card.innerHTML = `
+    <div class="guest-header">
+      <div class="rank-badge${g.rank <= 2 ? ' top' : ''}">${g.rank}</div>
+      <div class="guest-identity">
+        <div class="guest-name${isAnon ? ' anonymous' : ''}">${displayName}</div>
+        <div class="guest-email">${g.email}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.15rem">
+        <div style="display:flex;gap:3px">${makeVisitPips(g.visits)}</div>
+        <div style="display:flex;align-items:baseline;gap:.3rem">
+          <div class="visit-count">${g.visits}</div>
+          <div class="visit-label">contacts</div>
+        </div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="guest-detail">
+      <div class="detail-grid">${detailRows}</div>
+      <div>${tags}</div>
+      <div class="note">${g.note}</div>
+      <div><a class="action-btn primary" href="${g.actionEmail}">${g.actionLabel || '✉ Draft outreach email'}</a></div>
+    </div>`;
+  card.querySelector('.guest-header').addEventListener('click', () => card.classList.toggle('open'));
   container.appendChild(card);
 }
 
-var institutional=document.getElementById('institutionalGuests');
-var personal=document.getElementById('personalGuests');
-var unbound=document.getElementById('unboundGuests');
-GUESTS.forEach(function(g){
-  var target=g.type==='institutional'?institutional:g.type==='unbound'?unbound:personal;
-  renderGuest(g,target);
+const institutional = document.getElementById('institutionalGuests');
+const personal = document.getElementById('personalGuests');
+const unbound = document.getElementById('unboundGuests');
+GUESTS.forEach(g => {
+  const target = g.type === 'institutional' ? institutional : g.type === 'unbound' ? unbound : personal;
+  renderGuest(g, target);
 });
 </script>
 </body>
